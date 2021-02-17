@@ -1,0 +1,55 @@
+@ convert a string to upper case:
+	transform(s.begin(), s.end(), s.begin(), ::toupper);
+
+@ remove non alphabatic character:
+	str.erase(remove_if(str.begin(),str.end(), notalpha),str.end());
+	
+@ pair vector:
+	vector<pair<int,int> > twin;
+	twin.push_back({i-2,i});
+	twin.push_back(make_pair(i-2,i));
+
+@ dynamically allocate:
+	vector< vector<int> > adj; //or, vector<int> *adj;
+	adj.resize(node+1); //or, adj=new vector<int> [node];
+
+@ stl এর string কে printf দিয়ে প্রিন্ট করতে :
+	printf("%s", string_name.c_str());
+
+@ Priority Queue:
+	priority_queue <int> pq; //descending order
+	priority_queue <int,vector<int>,greater<int>> pq; //ascending order
+
+@ set:
+	set<int> st;
+	st.insert(5);
+	for(auto it=st.begin();it!=st.end();++it) cout<<*it<<" ";
+	for(auto it=st.rbegin();it!=st.rend();++it) cout<<*it<<" ";
+	
+	if(st.insert(2).second == 1 ) new element inserted
+	if(st.insert(2).second == 0 ) new element is not inserted 
+
+@ multiset:
+	st.insert(5); st.insert(5);
+	st.erase(st.find(5));
+
+@ map:
+	red black tree diye eita kora hoy
+
+@ vector:
+	copy array to vector:
+		int arr[] = {1, 2, 3, 4, 7};
+		vector<int> v1;
+		vector<int> v2;
+		v1.assign(arr, arr+5);
+
+@ lower_bound:
+	lower_bound(d,d+k,l); //returns the last solution greater than or equal to l
+	returns number of elements less than l
+@ upper_bound:
+	upper_bound(d,d+k,r) //returns the first solution greater than r
+	returns number of elements less or equals to the r
+
+@ number of points in a range(l, r):
+	total_points = upper_bound(A+1, A+n+1, r) - lower_bound(A+1, A+n+1, l);
+	or, use segment tree

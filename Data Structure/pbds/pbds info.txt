@@ -1,0 +1,38 @@
+#include <ext/pb_ds/assoc_container.hpp> // Common file
+#include <ext/pb_ds/tree_policy.hpp> // Including tree_order_statistics_node_update
+After closer inspection you may find that the last two files contained in the library
+	#include <ext/pb_ds/detail/standard_policies.hpp>
+
+#include <ext/rope>
+using namespace __gnu_pbds;
+using namespace __gnu_cxx;
+
+tree_order_statistics_node_update> indexed_set;
+
+# find_by_order(k) --> returns iterator to the kth largest element counting from 0. (0-based)
+# order_of_key(val) --> 0 based index / returns the number of items in a set that are strictly smaller than our item
+
+@ The tree-based container has the following declaration:
+template<
+	  typename Key, // Key type
+	  typename Mapped, // Mapped-policy
+	  typename Cmp_Fn = std::less<Key>, // Key comparison functor
+	  typename Tag = rb_tree_tag, // Specifies which underlying data structure to use
+	  template<
+	  typename Const_Node_Iterator,
+	  typename Node_Iterator,
+	  typename Cmp_Fn_,
+	  typename Allocator_>
+	  class Node_Update = null_node_update, // A policy for updating node invariants
+	  typename Allocator = std::allocator<char> 
+> // An allocator type
+class tree;
+
+template<typename T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
+problem:
+	c:\mingw\lib\gcc\mingw32\8.2.0\include\c++\ext\pb_ds\hash_policy.hpp:610:10: fatal error: ext/pb_ds/detail/resize_policy/hash_standard_resize_policy_imp.hpp: No such file or directory
+
+	solution:
+		There was the file named "hash_standard_resize_policy_imp.hpp0000644" in my case. Rename it to "hash_standard_resize_policy_imp.hpp"

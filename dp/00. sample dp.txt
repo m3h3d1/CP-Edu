@@ -1,0 +1,10 @@
+CSES dp sol: https://codeforces.com/blog/entry/70018
+@ :
+	1 theke 6 porjonto songkha gulu ke joto bar khushi niye total koto upaye n banano jabe.
+	sol: dp(n-1) + dp(n-2) + dp(n-3) + dp(n-4) + dp(n-5) + dp(n-6);
+	https://cses.fi/problemset/task/1633
+@ :
+	given a set of N positive integer values. Find the largest subset such that for any two values A and B in the subset, either A divides B or B divides A.
+	sol: after sorting the numbers we need to find the longest subsequence S such that S[i] divides S[i+1].
+	https://csacademy.com/contest/archive/task/divisor_clique/statement/
+

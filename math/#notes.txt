@@ -1,0 +1,25 @@
+*** sorboccho (5*q)! a q songkhok zero thakbe.
+@ a%m when a<0 :
+	a%m = a+m;
+	general form: (a%m + m)%m
+
+@ Combination with repetition:
+	there a ‘N’ objects and ‘R’ objects have to be selected(repetition is allowed),
+	then the number of ways it can be done is :-
+					(n+r-1) C r
+@ stars & bars:
+	The number of ways to put n identical objects into k labeled boxes is
+					(n+r-1) C n
+General Solution:
+	**||***
+	stars = n = 5
+	bars = k = 2
+	sol = (n+k-1) C (k-1) = (n+k-1) C (n)
+
+number of non-negative, non-zero integer solution for:
+	x+y+z = p
+	*|****|**
+	stars = n = p-1 = 6
+	bars = k-1 = 2
+	sol = (n-1) C (k-1)
+

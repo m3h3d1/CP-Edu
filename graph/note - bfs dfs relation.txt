@@ -1,0 +1,33 @@
+BFS and DFS are very closely related to each other. 
+The difference is that BFS uses a queue while DFS uses a stack. 
+Queues can be described as lists where we write at the end and read from the beginning. 
+Stacks can be described as lists where we write at the end and read from the end. 
+Thus we can describe BFS and DFS in the following way:
+    bfs(G)
+        list L = empty
+        tree T = empty
+        choose a starting vertex x
+        visit(x)
+        while(L nonempty)
+            remove edge (v,w) from beginning of L
+            if w not visited
+               add (v,w) to T
+               visit(w)
+            
+
+    dfs(G)
+        list L = empty
+        tree T = empty
+        choose a starting vertex x
+        visit(x)
+        while(L nonempty)
+            remove edge (v,w) from end of L
+            if w not visited
+               add (v,w) to T
+               visit(w)
+            
+
+    visit(vertex v)
+        mark v as visited
+        for each edge (v,w)
+            add edge (v,w) to end of L

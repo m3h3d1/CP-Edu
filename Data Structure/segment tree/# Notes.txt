@@ -1,0 +1,122 @@
+        https://codeforces.com/blog/entry/44478
+
+Implementing harder variations of lazy propagation becomes extremely easy once you abstract away all unnecessary clutter and focus only on important details.
+
+Denote by M the type of elements that are stored in the array that our segment tree represents. Nodes of the tree correspond to sub-arrays and contain aggregated information about the elements of this sub-array. The aggregation is represented by a binary operation that we denote by  + . This operation must be associative (a + (b + c) = (a + b) + c), but not necessarily commutative (it may be that a + b ≠ b + a). Informally, we can think of  +  as string concatenation. For convenience, we also require that M contains a unit element — an element e that e + x = x + e = x for any x in M. Such a set M (with an associative binary operation and a unit) is called a monoid. Examples of monoids are:
+
+The set of strings with concatenation; unit is the empty string.
+The set of integers with addition; unit is zero.
+The set of residues modulo arbitrary number N with modular multiplication; unit is 1.
+To summarize:
+
+We have a (virtual) array a containing elements of a monoid M.
+The array is represented by a binary tree. Each node of the tree corresponds to a sub-array a[i..j] and contains the value ai + ... + aj, which we also denote by concat(a[i..j]).
+To change a single element in the array, traverse the tree down to the corresponding leaf, change the value at the leaf and finally go back to the root recalculating all aggregated values on the path (by concatenating the aggregated values at children).
+Let's move on to aggregate operations. The basic idea is that each node of the tree, in addition to the aggregate value on the corresponding sub-array, will contain an operation that is supposed to be applied to the sub-array as a whole. We denote the set of all possible operations by F.
+
+Note that now the same array a may have multiple representations as a segment tree. For example, let the array contain integers with addition, and fk be the operation 'add k to all elements of the sub-array'. We write each node of a tree as a pair (fk, s), where s is the sum of the sub-array and fk is the pending operation. We write the whole tree as a sequence of nodes [(fk1, s1), (fk2, s2), ...] in top-down order, so the first node represents the whole array, the second node represents the left half of the array, the third node — the right half, the fourth node — the first quarter and so on. Then the array a = [4, 5] may be represented by the following trees:
+
+T1 = [(f0, 9), (f0, 4), (f0, 5)]
+T2 = [(f2, 5), (f0, 2), (f0, 3)]
+T3 = [(f0, 9), (f2, 2), (f2, 3)]
+and so on.
+
+Let's think about what we need from operations F. What we really want is still the actual aggregated values on sub-arrays. So when we have a node (f, s), we need to find what will happen to the aggregated value s once we apply operation f to the sub-array. In other words, we need the function applyAggregate: F × M → M satisfying applyAggregate(f, concat(a[i..j])) = concat(f(a[i..j])). For our example we have applyAggregate(fk, s) = s + k × L, where L is the length of the sub-array.
+
+This is not all, though. Consider the tree T = [(f1, 9), (f2, 2), (f0, 5)]. If we calculate the aggregate value at (f2, 2) as 2 + 2 × 1 = 4, it will be wrong. The problem is, there is another operation pending on this sub-array — f1 (it is applied to the whole array, and hence to the sub-array too). We need to make sure this doesn't happen.
+
+For this purpose, each time we descend from a parent to a child in the tree, we replace the operation in the parent with two operations in its children (this is known as 'push' operation). The result is a tree that represents the same array, but doesn't have the problem described in the previous paragraph. For example, push(T2) = T3, where T2 and T3 are defined above. (Note how the aggregated value at the parent is changed by applyAggregate function.)
+
+The children, however, may have their own pending operations. So when we 'push' an operation from the parent, we actually have to compose it with the existing operation in the child. We finally arrive at the second function required for lazy propagation: compose: F × F → F, where compose(child, parent) is the new operation at child after 'pushing' from parent.
+
+To summarize, the only functions we need to implement are:
+
+applyAggregate(op, currentAggregate) = newAggregate
+compose(childOp, parentOp) = newChildOp.
+Applying an operation on sub-array a[i..j] is similar to calculating the sum (concatenation) on this sub-array: descend the tree recursively, but when current sub-array is completely inside a[i..j], apply it to the whole node and stop the recursion. (And when current sub-array doesn't intersect a[i..j], stop the recursion too.)
+
+We now implement these functions for three examples. All examples work with the same element monoid — integers with addition — but have different aggregate operations.
+
+1. Aggregate operation is 'add the same number to all elements'.
+
+struct F1 {     // Represents aggregate operation
+    int L, R;   // applied at sub-array a[L..R]
+    int add;    // add this to all elements
+
+    int applyAggregate(int oldAggregate) {
+        return oldAggregate + add * (R - L + 1);  // add to each of R-L+1 elements
+    }
+
+    void compose(const F1& parent) {  // compose in-place
+        add += parent.add;
+    }
+};
+2. Aggregate operation is 'change all elements to the same number'.
+
+struct F2 {     // Represents aggregate operation
+    int L, R;   // applied at sub-array a[L..R]
+    int v;      // change all elements to v; by convention, v == -1 means no change
+
+    int applyAggregate(int oldAggregate) {
+        if (v == -1) return oldAggregate; // no change
+        return v * (R - L + 1);           // each of R-L+1 elements is set to v
+    }
+
+    void compose(const F2& parent) {  // compose in-place
+        // if parent is changed, we change to the same value too; otherwise stay the same
+        if (parent.v != -1) {
+            v = parent.v;
+        }
+    }
+};
+3. Now for a complicated example, aggregate operations are: 'change all elements to the same number'; 'multiply all elements by the same number'; 'add an arithmetic progression to the sub-array' (e.g., [1,1,1,1] becomes [2,4,6,8])
+
+struct F3 {     // Represents aggregate operation
+    int L, R;   // applied at sub-array a[L..R]
+    int v;      // First, change all elements to v; by convention, v == -1 means no change
+    int c;      // Second, multiply all elements by c
+    int k, a;   // Third, add a to the first element, a+k to the second, a+2k to the third etc
+
+    int applyAggregate(int oldAggregate) {
+        int result = oldAggregate;
+        // replace
+        if (v != -1)
+            result = v * (R - L + 1);
+
+        // multiply
+        result *= c;
+
+        // add progression
+        result += (R-L+1) * (2*a + (R-L)*k) / 2; // sum of progression
+
+        return result;
+    }
+
+    void compose(const F3& parent) {  // compose in-place
+        // replace
+        if (parent.v != -1) {
+            v = parent.v;
+            c = 1;
+            k = a = 0;
+        }
+
+        // multiply
+        c *= parent.c;
+        k *= parent.c;
+        a *= parent.c;
+
+        // add progression
+        int newA = parent.a + parent.k * (L - parent.L); // the progression restricted to [L,R] starts with this number
+        k += parent.k;
+        a += newA;
+    }
+};
+The above code excerpts are the only thing that distinguishes the three segment trees. The rest of the implementation uses applyAggregate and compose functions; it is identical in trivial cases (1), (2) and the complicated case (3). This shows that there is no conceptual difference between these cases.
+
+tl;dr: Decomposing the problem by formulating generic requirements leads to better understanding and cleaner, simpler, more general implementation. See also: Elements of Programming. Alexander Stepanov and Paul McJones.
+
+Update: See source code here.
+
+
+------------------------------------------------------------------------------------------
+

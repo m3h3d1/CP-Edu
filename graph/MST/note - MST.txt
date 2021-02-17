@@ -1,0 +1,10 @@
+Kruskal()
+	solve all edges in ascending order of their weight in an array e
+	ans = 0
+	for i = 1 to m
+		v = e.first
+		u = e.second
+		w = e.weight
+		if merge(v,u) // there will be no cycle
+			then ans += w
+

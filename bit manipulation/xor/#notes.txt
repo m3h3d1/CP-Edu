@@ -1,0 +1,65 @@
+0^0=0
+0^1=1
+1^0=1
+1^1=0
+
+Properties:
+	1. A^B = B^A
+	2. A^B^c = A^(B^c) = (A^B)^c = (A^c)^B
+	3. A^A = 0
+	4. A^0 = A
+
+	5. A^B >= A-B
+	6. A^B^A = 0^B = B
+	7. D = A^B^C can Be introduced as A = B^C^D
+		proof:
+			D = A^B^C
+			=> D^D^A = A^B^C^D^A
+			=> A = B^C^D
+	8. if A^B = C then, A = B^C
+		proof:
+			A^B = C
+		    => A^B^B = C^B
+			=> A = B^C
+Properties:
+	1. a ⊕ b = b ⊕ a
+	2. a ⊕ b ⊕ c = a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c = (a ⊕ c) ⊕ b
+	3. a ⊕ a = 0
+	4. a ⊕ 0 = a
+
+	5. d = a ⊕ b ⊕ c can be introduced a = d ⊕ b ⊕ c
+	6. a ⊕ b ⊕ a = 0 ⊕ b = b
+
+Properties:
+	exchange law:  // commutative
+		a ^ b = b ^ a
+	combination law: // associative ?
+		a ^ (b ^ c) = (a ^ b) ^ c
+	allocation rate: // distributive ?
+		a ^ (b+c) = a ^ b + a ^ c
+	Reflexive:
+		a ^ b ^ b = a ^ 0 = a 
+
+Application:
+	we know, if A^B = C then, A = B^C
+	Therefore, the judgment condition can be further written as
+	0⊕a_l⊕a_l+1⊕…⊕a_mid = a_mid+1⊕a_mid+2⊕…⊕a_r
+	0 = a_l⊕a_l+1⊕…⊕a_mid⊕a_mid+1⊕a_mid+2⊕…⊕a_r
+	0 = XOR(a_l,a_r)
+	This leads to the conclusion that if XOR(a_l,a_r)=0 in the interval (l,r), 
+		then for any i belongs to the interval (l,r) (including the interval endpoint ), with XOR(a_l,a_i)==XOR(a_i+1,a_r)
+
+Application in Game theory:
+	https://www.youtube.com/watch?v=VwRZbQ6dycA
+
+⊕ and +:
+	The trick is to notice that both operators + and ⊕ satisfy the following property for any positive integer k:
+
+	((a mod 2^k) + (b mod 2^k)) mod 2^k = (a + b) mod 2^k
+	((a mod 2^k) ⊕ (b mod 2^k)) = (a ⊕ b) mod 2^k
+
+Proof of associative:
+	As long as a ^ b == ~a & b | a & ~b, you can proove that :
+
+	(a ^ b) ^ c = ~((~a & b) | (a & ~b)) & c | ((~a & b) | (a & ~b)) & ~c
+	a ^ (b ^ c) = a & ~((~b & c) | (b & ~c)) | ~a & ((~b & c) | (b & ~c))

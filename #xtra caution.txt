@@ -1,0 +1,36 @@
+@ Do not use ceil or floor for large value (long long) :
+	ceil will not accept large values ​​if it receives double input so it can not accept, WA
+	define ceil for ll and change it to receive input
+	It is better to define and use floor and ceil for ll
+
+
+
+/*STL:
+       (1) PRIORITY_QUEUE pq:
+       -> priority_queue < int > pq; // max_heap
+       -> priority_queue < int , vector < int > , greater < int > > pq; // min_heap 
+       -> pq.top()   --> returns the maximum or minimum element
+       -> pq.push()  --> push element into the queue
+       -> pq.pop()   --> remove top most element
+       -> pq.empty() --> checks whether queue is empty or not
+ 
+       (2) set / multiset  ss; 
+       --> ss.insert(key); (insertion)
+       --> ss.erase(ss.find(key)) .. (deletion)
+       --> ss.find(key) != ss.end() ..existence check
+       --> ss.lower_bound(x) -> smallest value which is greater than or equals to x
+       --> ss.upper_bound(x) --> first value strictly greater than x
+       --> multiset< data_type , greater<data_type> > ms; // for max ordering
+ 
+       (3) common functions
+       lower_bound(v.begin(),v.end(),x) - v.begin() --> smallest value greater than or equals to x
+       upper_bound(v.begin(), v.end(),x)- v.begin() --> smallest value greater than x
+       memset(dp , val , sizeof(dp)) -> sets the value of array dp to val
+     
+       (4)  common mistakes
+           .) long long vs int overflow
+           .) read question carefully please!!!! it can cost you a lot
+           .) unorderedmap is O(1) look up but worst case can be bad
+           .) maps have higher constant so many lookups can cause TLE
+           .) leaving debugs or cerrs in the program at times can cause TLE
+*/

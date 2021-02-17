@@ -1,0 +1,7 @@
+1. segment tree er size insufficient hoile WA;
+2. pushdown e lazy 0 kora hoiche to?
+3. build e lazy 0 kora hoiche to?
+4. 1 er beshi test case thakle build function a lazy, st 0 diye initialise kora hoiche to?
+
+Notes:
+	point query thakle query te if(l==r) er bodole if(l>=i && r<=i) lekha jabe;

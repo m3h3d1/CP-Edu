@@ -1,0 +1,298 @@
+@ Binary std::string to decimal
+	unsigned long long val = std::bitset<64>(str).to_ullong(); (bitset)
+	long long val=stoll(str,0,2); (include<string>)
+
+@ int to binary string:
+    unsigned long num = 3;
+    std::bitset<32> bits(num);
+    std::string binary = bits.to_string();
+@ Check if x is a subset of y:
+	(x&y)==x
+
+$$$$$$$$$$$$$$$$$$$$ A bit of fun: fun with bits $$$$$$$$$$$$$$$$$$$$
+@ Set union:
+	a|b
+
+	example:
+	  a = 0001010 (10)
+	  b = 0000100 (4)
+	a|b = 0001110 (14)
+
+@ Set intersection:
+	a&b
+
+	example:
+	  a = 0001010 (10)
+	  b = 0000100 (4)
+	a|b = 0000000 (0)
+
+@ Set subtraction:
+	a&~b
+
+	example:
+	  a = 0001010 (10)
+	  b = 0000100 (4)
+
+	 ~b = 1111011 (-5)
+	 ~a = 1110101 (-11)
+	a&~b =0001010 (10)
+
+@ Set negation:
+	all_bits ^ a
+	ALL_BITS is a number with 1's for all bits corresponding to the elements of the domain
+
+@ Set bit:
+	A |= 1 << bit
+
+	example:
+	a = 0001010 (10)
+	a |= 1<<0
+	a = 0001011 (11)
+
+	a = 0001010 (10)
+	a |= 1<<2
+	a = 0001110 (14)
+
+@ Clear bit:
+	A &= ~(1 << bit)
+
+	example:
+	a = 0001010 (10)
+	a &= ~(1<<1)
+	a = 0001000 (8)
+
+	a = 0001010 (10)
+	a &= ~(1<<3)
+	a = 0000010 (2)
+
+@ Test bit:
+	(a&1<<bit)!=0
+	
+	example: a=1010 (10)
+	0 th bit=a&1<<0 = 0 (false)
+	1 th bit=a&1<<1 = 10 (true)
+
+@ leading zeros, trailing zeros:
+	a = 00000000000000000000000000001010 (10)
+	p = __builtin_clz(a) = 28, leading zeros
+	p = __builtin_ctz(a) = 1, trailing zeros
+
+@ Count num of set bits, check is power of 2:
+	a = 1010 (10)
+	p = __builtin_popcount(a) = 2
+
+	if res=1, then it is power of 2
+
+
+
+
+
+-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-
+
+@ 3. How to know if a number is a power of 2? :
+	// Function to check if x is power of 2
+	bool isPowerOfTwo(int x)
+	{
+	     // First x in the below expression is
+	     // for the case when x is 0
+	     return x && (!(x & (x - 1)));
+	}
+
+@ 6. Convert binary code directly into an integer in C++ :
+	#include <iostream>
+	using namespace std;
+	 
+	int main() {
+	    auto num = 0b011;
+	    cout << num;
+	    return 0;
+	}
+	Output: 3
+
+@ 7. The Quickest way to swap two numbers:
+	a ^= b;
+	b ^= a;
+	a ^= b;
+
+@ 8. Minimum and Maximum Of two Numbers x,y:
+	max_xy = x ^ ((x ^ y) & -(x < y));    //Returns Maximum
+	min_xy = y ^ ((x ^ y) & -(x < y));    //Returns Minimum
+
+@ 3. checks if non-negative integer is a power of 2 or not:
+	v && !(v & (v - 1))
+	v && (v & -v) == v
+
+@ 2. Code to find the Greatest Common Divisor of two numbers:
+	 int GCD(int a,int b) {
+		 while (b^=a^=b^=a%=b);
+		 return a;
+	 }
+
+@ 1. Check if a number is divisible by two or not:
+	if(x & 1 == 0)
+		return True;
+	else
+		return False;
+
+@ find gcd:
+	int gcd(int a, int b) {
+	    while(b) b ^= a ^= b ^= a %= b;
+	    return a;
+	}
+
+-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-
+((^*^)) Bit Tricks for Competitive Programming - GeeksforGeeks {(*_*)}
+@ We have considered below facts in this article –: 
+	• 0 based indexing of bits from left to right.
+	• Setting i-th bit means, turning i-th bit to 1
+	• Clearing i-th bit means, turning i-th bit to 0
+
+@	1. Clear all bits from LSB to ith bit:
+	mask = ~((1 << i+1 ) - 1);
+	x &= mask;
+	
+	Logic: To clear all bits from LSB to i-th bit, we have to AND x with mask having LSB
+	to i-th bit 0. To obtain such mask, first left shift 1 i times. Now if we minus 1 from that,
+	all the bits from 0 to i-1 become 1 and remaining bits become 0. Now we can simply take
+	complement of mask to get all first i bits to 0 and remaining to 1.
+	Example-
+	x = 29 (00011101) and we want to clear LSB to 3rd bit, total 4 bits
+	mask -> 1 << 4 -> 16(00010000)
+	mask -> 16 – 1 -> 15(00001111)
+	mask -> ~mask -> 11110000
+	x & mask -> 16 (00010000)
+
+@ 	2. Clearing all bits from MSB to i-th bit:
+	mask = (1 << i) - 1;
+	x &= mask;
+	
+	Logic: To clear all bits from MSB to i-th bit, we have to AND x with mask having MSB
+	to i-th bit 0. To obtain such mask, first left shift 1 i times. Now if we minus 1 from that,
+	all the bits from 0 to i-1 become 1 and remaining bits become 0.
+	Example-
+	x = 215 (11010111) and we want to clear MSB to 4th bit, total 4 bits
+	mask -> 1 << 4 -> 16(00010000)
+	mask -> 16 – 1 -> 15(00001111)
+	x & mask -> 7(00000111)
+
+@	3. Divide by 2:
+	x >>= 1;
+	
+	Logic: When we do arithmetic right shift, every bit is shifted to right and blank position is
+	substituted with sign bit of number, 0 in case of positive and 1 in case of negative number.
+	Since every bit is a power of 2, with each shift we are reducing the value of each bit by
+	factor of 2 which is equivalent to division of x by 2.
+	Example-
+	x = 18(00010010)
+	x >> 1 = 9 (00001001)
+
+@	4. Multiplying by 2:
+	x <<= 1;
+	
+	Logic: When we do arithmetic left shift, every bit is shifted to left and blank position is
+	substituted with 0 . Since every bit is a power of 2, with each shift we are increasing the
+	value of each bit by a factor of 2 which is equivalent to multiplication of x by 2.
+	Example-
+	x = 18(00010010)
+	x << 1 = 36 (00100100)
+
+@	5. Upper case English alphabet to lower case:
+	ch |= ' ';
+	
+	Logic: The bit representation of upper case and lower case English alphabets are –
+	A -> 01000001 a -> 01100001
+	B -> 01000010 b -> 01100010
+	C -> 01000011 c -> 01100011
+		. 					.
+		. 					.
+	Z -> 01011010 z -> 01111010
+	
+	As we can see if we set 5th bit of upper case characters, it will be converted into lower case
+	character. We have to prepare a mask having 5th bit 1 and other 0 (00100000). This mask
+	is bit representation of space character (‘ ‘). The character ‘ch’ then ORed with mask.
+	Example-
+	ch = ‘A’ (01000001)
+	mask = ‘ ‘ (00100000)
+	ch | mask = ‘a’ (01100001)
+
+@	6. Lower case English alphabet to upper case:
+	ch &= '_’ ;
+	
+	Logic: The bit representation of upper case and lower case English alphabets are –
+	A -> 01000001 a -> 01100001
+	B -> 01000010 b -> 01100010
+	C -> 01000011 c -> 01100011
+	. .
+	. .
+	Z -> 01011010 z -> 01111010
+	
+	As we can see if we clear 5th bit of lower case characters, it will be converted into upper
+	case character. We have to prepare a mask having 5th bit 0 and other 1 (10111111). This
+	mask is bit representation of underscore character (‘_‘). The character ‘ch’ then AND with
+	mask.
+	Example-
+	ch = ‘a’ (01100001)
+	mask = ‘_ ‘ (11011111)
+	ch | mask = ‘A’ (01000001)
+
+@	7. Count set bits in integer:
+	int countSetBits(int x) {
+	    int count = 0;
+	    while (x) {
+			x &= (x-1);
+			count++;
+		}
+		return count;
+	}
+
+	Logic: This is Brian Kernighan’s algorithm.
+
+@	8. Find log base 2 of 32 bit integer:
+	int log2(int x) {
+	    int res = 0;
+	    while (x >>= 1)
+	        res++;
+	    return res;
+	}
+
+	Logic: We right shift x repeatedly until it becomes 0, meanwhile we keep count on the shift
+	operation. This count value is the log2(x).
+
+@	9. Checking if given 32 bit integer is power of 2:
+	int isPowerof2(int x) {
+	    return (x && !(x & x-1));
+	}
+
+	Logic: All the power of 2 have only single bit set e.g. 16 (00010000). If we minus 1 from
+	this, all the bits from LSB to set bit get toggled, i.e., 16-1 = 15 (00001111). Now if we AND
+	x with (x-1) and the result is 0 then we can say that x is power of 2 otherwise not. We have
+	to take extra care when x = 0.
+	Example
+	x = 16(000100000)
+	x – 1 = 15(00001111)
+	x & (x-1) = 0
+	so 16 is power of 2
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+XOR Related Problems:
+@ 1. Compute XOR from 1 to n (direct method) :
+	// Direct XOR of all numbers from 1 to n
+	int computeXOR(int n)
+	{
+	    if (n % 4 == 0)
+	        return n;
+	    if (n % 4 == 1)
+	        return 1;
+	    if (n % 4 == 2)
+	        return n + 1;
+	    else
+	        return 0;
+	}
+	Input: 6
+	Output: 7
+
+@ if a^b = c then, a^c = b:
+	codeforces 742B
+
+

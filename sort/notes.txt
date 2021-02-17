@@ -1,0 +1,20 @@
+sort using custom compare(?):
+	sort(arr,arr+n,[](int a, int b)-> bool return{a>b;});
+	sort(arr,arr+n,greater<int>());
+	sort(arr,arr+n,cmp);
+
+	which one is faster? ans: (1,2)->3
+
+
+	unordered_map<char, vector<int>> cnt;
+	string res=v[0];
+    sort(res.begin(), res.end(), [&](char a, char b){
+        if(cnt[a]==cnt[b]) return a<b;
+        return cnt[a]>cnt[b];
+    });
+    // https://leetcode.com/contest/weekly-contest-178/problems/rank-teams-by-votes/
+
+wrong way!:
+	bool cmp(int a, int b) {return a>=b;}
+	is a wrong way.
+	for(CodeForces - 845A, testcase 5) it caused me TLE.

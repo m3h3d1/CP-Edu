@@ -1,0 +1,2 @@
+@ faster factorization 1e30:
+	https://loj.ac/problem/6466/statistics/fastest

@@ -1,0 +1,37 @@
+Not setting precision high enough when using cout to print floating point answers:
+	
+	The default precision is only 6 digits, and problems often ask for more precision than that, so I think it's a good idea to do cout << setpreciinvolvedsion(12) whenever floating points are 
+
+Using 1 << k instead of 1LL << k when the result won't fit in 32 bits
+
+Only considering one direction of an undirected graph when reading input
+
+Using the wrong priority queue ordering:
+	
+	Since C++ priority queues give you the max element by default, you need to initialize with priority_queue<T, vector<T>, greater<T>> if you want to get the min (e.g. in Dijkstra's algorithm)
+Using the wrong parameter (e.g. n instead of m) when reading input(!)
+
+Use assert():
+	
+	if we use assert then if any condition doesn't meet then we will get runtime error and we can find out possible error in our code
+
+Compiler verdict:
+	Index out of range error leading to SEGSEV
+	Never ending while loops leading to SIGKILL
+
+Coders to Follow:
+	Jubayer Nirjhor
+		Codeforces: Alpha_Q
+		Github: MathIsLife
+	mango_lassi : Uses Comment (CF)
+	zscoder : Uses Comment (CF)
+	dr.ken
+		Codeforces: dr.ken
+		website: https://drken1215.hatenablog.com/
+
+
+How to read problem statement:
+	https://codeforces.com/blog/entry/62730
+	If you are given some connected graph with exactly one simple path between each pair of vertices, it's called tree.
+	Try even harder to spot something strange, something you not expecting.
+	

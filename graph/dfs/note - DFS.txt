@@ -1,0 +1,36 @@
+DFS builds a DFS tree T which shows how the vertices are visited.
+The initialization step consists in marking all vertices as unvisited and selecting a start vertex.
+
+Recursive implementation of depth-first search:
+	DepthFirst(Vertex v) {
+	    visit(v)
+	    for each neighbor w of v
+	        if (w is not visited)
+	            add edge (v,w) to tree T
+	            DepthFirst(w)
+	}
+	Visit(v) {
+	    mark v as visited 
+	}
+
+Non-recursive implementation
+The non-recursive implementation uses a stack
+
+Initialization: 
+	mark all vertices as unvisited, 
+	visit(s)
+
+while the stack is not empty:
+{
+    pop (v,w) 
+    if w is not visited
+        add (v,w) to tree T
+        visit(w)
+}
+
+visit(v) {
+    mark v as visited
+    for each edge (v,w)
+    	push (v,w) in the stack
+}
+
