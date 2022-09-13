@@ -1,3 +1,15 @@
+#others:
+	A[-1] = 0; if A is declared in global
+#Negative index array:
+	const int M = 10; // I want indices from -M to +M
+	int _a[2*M+1]; // underlying array of size 2*M+1
+	int* a = _a + M; // array that has index [0] in the middle of the big array
+	int main() {
+		a[-10] = a[1] = 7;
+		cout << a[-10] << " " << a[3] << " " << a[10] << endl;
+	}
+	https://codeforces.com/blog/entry/70472?#comment-549321
+
 # use 1ll
 	int x = 1000000;
 	int y = 1000000;
@@ -8,6 +20,16 @@ long long int z = 1ll << 40;
 # (z + x*y)%mod is the same as ((z%mod) + ((x%mod)*(y%mod))%mod)%mod.
 
 # inbuilt gcd function __gcd(x,y)
+
+@ integer Overflow:
+	a+b<=INT_MAX eirokom howa lagbe overflow jate na hoy. 
+	so, eirokom vabe check deya jay, a<=INT_MAX-b
+
+	INT_MAX = numeric_limits<int>::max()
+
+@ mod:
+	  a = (a+b)%mod
+	=>(a+b) %= mod
 
 @ fill 2d array:
 	fill(&arr[0][0], &arr[0][0]+sizeof(arr), 1); // not working
@@ -25,8 +47,8 @@ long long int z = 1ll << 40;
 
 @ resize 2d vector:
 	// vector<vector<int>> M;
-	// int m = number of rows, n = number of columns;
-	M.resize(m, vector<int>(n));
+	// int n = number of rows, m = number of columns;
+	M.resize(n, vector<int>(m));
 
 	matrix.clear();
 	matrix.resize( row_count , vector<int>( column_count , initialization_value ) );
@@ -81,6 +103,10 @@ long long int z = 1ll << 40;
 	int stoi( const std::string& str, std::size_t* pos = 0, int base = 10 ); // Interprets a signed integer value in the string str.
 	int x = stoi(str, 0 ,10);
 	int x = stoi(str) // default 10 base
+
+	int n
+	stringstream ss(n);
+	ss>>n;
 
 @ Copy Algorithm: used to copy elements from one container to another.
 	int source[5] = {0, 12, 34, 50, 80};
@@ -220,3 +246,40 @@ FAST IO:
 	    push_up(v);
 	}
 
+@ c++17 direction array:
+	const pii steps[] = {{-1,0},{1,0},{0,-1},{0,1}};
+	...
+	    for (auto [dx,dy] : steps) {
+	        int newX = x + dx;
+	        int newY = y + dy;
+	    }
+	...
+
+@ lambda, loop stl:
+	typedef std::pair<int, int> pair;
+	int main() {
+	    vector<pair> v = { { 1, 2 }, { 6, 4 }, { 3, 4 }, { 4, 1 } };
+	    sort(v.begin(), v.end(),
+	            [](const pair &x, const pair &y) {
+	                // compare the second value
+	                if (x.second != y.second) {
+	                    return x.second < y.second;
+	                }
+	                // compare first only if the second value is equal
+	                return x.first < y.first;
+	            });
+	 
+	    for (const pair &p: v) {
+	        std::cout << '{' << p.first << ',' << p.second << '}' << std::endl;
+	    }
+	    return 0;
+	}
+
+
+@ Member initializer list:
+	class test {
+	    vector<int> v;
+	public:
+	    test(int n) : v(n, 1) {}
+	};
+	// vector er size hobe n ebong prottek ta element er value hobe 1

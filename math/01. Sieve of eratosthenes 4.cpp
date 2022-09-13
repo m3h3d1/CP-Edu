@@ -14,7 +14,7 @@ void sieve() {
 			for(ll j=i*i;j<mxn;j+=2*i) comp[j]=1;
 		}
 	}
-	for(ll i=1;i<mxn;++i) {
+	for(ll i=2;i<mxn;++i) { // 1 not prime
 		if(!comp[i]) prime.push_back(i);
 	}
 }

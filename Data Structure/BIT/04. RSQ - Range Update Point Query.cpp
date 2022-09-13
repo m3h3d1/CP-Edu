@@ -25,9 +25,9 @@ int main() {
         fill(BIT,BIT+n+1,0);
         while(u--) {
             scanf("%d %d %d",&l,&r,&val);
-            l++, r++; // 0 Based to 1 based indexing
-            update(l,val);
-            update(r+1,-val);
+            l++, r++; // 1 based indexing
+            update(l, val);
+            update(r+1, -val);
         }
         scanf("%d",&q);
         while(q--) {

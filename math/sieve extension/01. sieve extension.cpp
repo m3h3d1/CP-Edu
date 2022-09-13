@@ -1,6 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 void divisorSieve(int n) {
     int divisor[n+1];
     for(int i=1;i<=n;++i) {
@@ -24,6 +23,7 @@ void EulerTotient(int n) { //phi
             }
         }
     }
+    cout<<totient[n]<<endl;
 }
 void biggestPrimeDivisor(int n) {
     int big[n+1] = {0,1};

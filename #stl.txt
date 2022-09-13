@@ -46,10 +46,34 @@
 @ lower_bound:
 	lower_bound(d,d+k,l); //returns the last solution greater than or equal to l
 	returns number of elements less than l
+	first pos in which val could be inserted without changing the order
 @ upper_bound:
 	upper_bound(d,d+k,r) //returns the first solution greater than r
 	returns number of elements less or equals to the r
+	last postion in which val could be inserted without changing the order
+
+Sorted Vector: 10 10 9 9 9 8 8 8 8 7 7 7 5 5 5 5
+lower_bound (v.begin( ), v.end( ), 8);
+upper_bound (v.begin( ), v.end( ), 8);
+Lower bound = 5
+Upper bound = 9
+
+@ lower_bound vs upper_bound:
+	upper bound return first element which is >value. If not, return end().
+	lower bound return first element which is ≥value. If not, return end().
+
+	Elements are : 1 3 5 7 9 
+	lower bound of 5: 5
+	lower bound of 1: 1
+	lower bound of 4: 5
+	upper bound of 5: 7
+	upper bound of 1: 3
+	upper bound of 4: 5
+
+	when the vector is sorted reversely:
+		lower_bound return the location of the first element <= value
+		upper_bound return the location of the first element < value
 
 @ number of points in a range(l, r):
-	total_points = upper_bound(A+1, A+n+1, r) - lower_bound(A+1, A+n+1, l);
+	total_points = upper_bound(A, A+n, r) - lower_bound(A, A+n, l);
 	or, use segment tree

@@ -1,18 +1,18 @@
 #include<bits/stdc++.h>
 using namespace std;
-int A[100005], BIT[100005];
+int A[100005], bit[100005];
 int n;
 
-int query(int idx) {
+int query(int i) {
     int s=0;
-    for(int i=idx;i>0;i-=(i&-i)) {
-        s+=BIT[i];
+    for(;i>0;i-=(i&-i)) {
+        s+=bit[i];
     }
     return s;
 }
-void update(int idx, int val) {
-    for(int i=idx;i<=n;i+=(i&-i)) {
-        BIT[i] += val;
+void update(int i, int val) {
+    for(;i<=n;i+=(i&-i)) {
+        bit[i] += val;
     }
 }
 int main() {
@@ -21,7 +21,7 @@ int main() {
     while(T--) {
         printf("Case %d:\n", ++cas);
         scanf("%d %d",&n,&q);
-        fill(BIT, BIT+n+2, 0);
+        fill(bit, bit+n+2, 0);
 
         for(int i=1;i<=n;++i) {
             scanf("%d",&A[i]);

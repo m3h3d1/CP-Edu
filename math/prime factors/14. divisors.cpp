@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<stdio.h>
 using namespace std;
 
 void divs(int r) {
@@ -15,6 +16,7 @@ void divs(int r) {
 	for(int i=0;i<v.size();++i) printf(" %d",v[i]);
 	printf("\n");
 }
+
 int main() {
 	int a,b,n,cas=0,p,l;
 	while(cin>>p) {

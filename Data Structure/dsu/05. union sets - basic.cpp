@@ -6,13 +6,13 @@ int find_par(int u) {
     if(par[u] == u) return u;
     return par[u] = find_par(par[u]);
 }
-void union_sets(int a,int b) {
+void union_set(int a,int b) {
     a = find_par(a);
     b = find_par(b);
     if(a != b) par[a] = b;
 }
 
-// void union_sets(int a, int b) {
+// void union_set(int a, int b) {
 //     a = find_par(a);
 //     b = find_par(b);
 //     if (a != b) {
@@ -34,9 +34,9 @@ int main() {
     par.resize(n+1);
     Rank.resize(n+1);
     for(int i=1;i<=n;++i) par[i] = i;
-    union_sets(1, 3);
-    union_sets(2, 1);
-    union_sets(4, 5);
+    union_set(1, 3);
+    union_set(2, 1);
+    union_set(4, 5);
     for(int i=1;i<=n;++i) cout<<i<<" "<<par[i]<<endl;
     return 0;
 }

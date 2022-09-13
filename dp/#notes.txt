@@ -1,0 +1,17 @@
+push-dp:
+  https://codeforces.com/blog/entry/91631?#comment-802257
+  // first way, more natural for problems like range dp, some tougher problems or sometimes when optimizations are needed
+  // way of thinking is along the lines of "I want this, what can I use to get to this"
+  for i:
+    for j:
+      // state [i][j] hasn't been computed, use previous computation to compute it
+      dp[i][j] = max(dp[i-1][j], dp[i-1][j-a[i-1]] - b[i-1])
+
+  // second way, for most problems this is more natural to me
+  // in my opinion, more natural because you can think more along the lines of "I have this, what can I do  to what I currently have to modify it"
+  for i:
+    for j:
+      // state [i][j] has already been computed, propagate its influence to other states
+      dp[i+1][j] = max(dp[i+1][j], dp[i][j])
+      dp[i+1][j+a[i]] = max(dp[i+1][j+a[i]], dp[i][j] + b[i])
+

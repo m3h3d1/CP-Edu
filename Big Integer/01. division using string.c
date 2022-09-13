@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<string.h>
-int main()
-{
+int main() {
     while(1){
         char str[1001]; int n,arr[1000];
         scanf("%s %d",str,&n);

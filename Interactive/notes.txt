@@ -1,2 +1,5 @@
 flush:
-	fflush(stdout) or cout.flush();
+	fflush(stdout) or cout.flush(); /
+	cout<<x<<endl; /
+	cout<<x<<'\n'; fflush(stdout);
+	

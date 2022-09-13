@@ -7,3 +7,17 @@
 	//(UNCOMMENT WHEN NEEDED)\
 	#pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math")\
 	#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
+
+@ C++ unexpected concurrency lock error (runtime):
+	#define _GLIBCXX_DEBUG
+	#include <set>
+	std::set<int> a;
+
+	int main() {
+	    std::set<int> b;
+	}
+	
+	https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66096
+	#my observation: It occurs sometimes while declaring global and local variable at the same time.
+
+

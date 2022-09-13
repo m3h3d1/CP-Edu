@@ -23,3 +23,10 @@ number of non-negative, non-zero integer solution for:
 	bars = k-1 = 2
 	sol = (n-1) C (k-1)
 
+chicken nugget theorem:
+	https://www.facebook.com/bduniverse01/posts/1644937735648979/
+	5, 7 diye largest koto number banano jabe na?
+	largest non purchasable num = nm-n-m
+	joto gula number banano jabe na = ceil(((n-1)*(m-1))/2)
+
+

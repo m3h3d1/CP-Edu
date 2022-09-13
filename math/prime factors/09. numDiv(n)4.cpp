@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<stdio.h>
 using namespace std;
 
 const int mxn=1e6+5;

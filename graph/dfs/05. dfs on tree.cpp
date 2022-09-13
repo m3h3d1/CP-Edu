@@ -4,7 +4,18 @@ using namespace std;
 #define db(x) cerr<<__LINE__<<": "<<#x<<" = "<<(x)<<'\n'
 const int N = 2e5+7;
 vector<int> adj[N+9];
-int lvl[N+9], subtreeSiz[N+9], cost[N+9];
+int lvl[N+9], subtreeSiz[N+9];
+
+/*
+// Main template:
+// no need vis array, as this grah is a tree
+void dfs(int on, int par) {
+    subtreeSiz[on] = 1;
+    for(int to: adj[on]) if(to!=par) {
+        dfs(to, on);
+    }
+}
+*/
 
 void dfs(int on, int par) {
     subtreeSiz[on] = 1;

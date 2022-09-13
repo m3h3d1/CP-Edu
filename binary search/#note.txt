@@ -1,4 +1,4 @@
-C++'s Standard Template Library has four functions for binary search, depending on what information you want to get. They all need
+C++ Standard Template Library has four functions for binary search, depending on what information you want to get. They all need
 
 #include <algorithm>
 
@@ -15,3 +15,8 @@ Note that the difference between the bounds is the number of elements equal to t
 
 The binary_search() function returns true or false for whether an element equal to the one you want exists in the array. It does not give you any information as to where it is.
 bool found = std::binary_search(array, array+len, what); // a custom comparator can be given as fourth arg
+
+
+@
+	Use s.lower_bound(x) instead of lower_bound(s.begin(),s.end(),x) , where s is a set.
+	Because later one, it is O(n+n/2+n/4+⋯+1)=O(n) 

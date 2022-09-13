@@ -3,8 +3,8 @@
 After closer inspection you may find that the last two files contained in the library
 	#include <ext/pb_ds/detail/standard_policies.hpp>
 
-#include <ext/rope>
 using namespace __gnu_pbds;
+#include <ext/rope>
 using namespace __gnu_cxx;
 
 tree_order_statistics_node_update> indexed_set;
@@ -17,22 +17,75 @@ template<
 	  typename Key, // Key type
 	  typename Mapped, // Mapped-policy
 	  typename Cmp_Fn = std::less<Key>, // Key comparison functor
-	  typename Tag = rb_tree_tag, // Specifies which underlying data structure to use
+	  typename Tag = rb_tree_tag, // tree structure. Only rb_tree_tag can be used in CP 
 	  template<
-	  typename Const_Node_Iterator,
-	  typename Node_Iterator,
-	  typename Cmp_Fn_,
-	  typename Allocator_>
+		  typename Const_Node_Iterator,
+		  typename Node_Iterator,
+		  typename Cmp_Fn_,
+		  typename Allocator_>
 	  class Node_Update = null_node_update, // A policy for updating node invariants
 	  typename Allocator = std::allocator<char> 
 > // An allocator type
 class tree;
 
+
+template<class T> using t = 
+tree<
+  T,
+  null_type,
+  less<T>,
+  rb_tree_tag,
+  tree_order_statistics_node_update>;
+
+t<int> os;
+
+
+multiset: use pair<int, int>, or less_equal
+	int cnt = 0;
+    for(int i = 0, a; i < n; i++) {
+        cin >> a;
+        m.insert({a,++cnt});
+    }
+
 template<typename T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+//order_of_key(k)  : Number of items strictly smaller than k .
+//find_by_order(k) : K-th element in a set (0 indexed).//*(ost.find_by_order(k))
 
 problem:
 	c:\mingw\lib\gcc\mingw32\8.2.0\include\c++\ext\pb_ds\hash_policy.hpp:610:10: fatal error: ext/pb_ds/detail/resize_policy/hash_standard_resize_policy_imp.hpp: No such file or directory
 
 	solution:
 		There was the file named "hash_standard_resize_policy_imp.hpp0000644" in my case. Rename it to "hash_standard_resize_policy_imp.hpp"
+
+
+Cmp_fn = less<T>, less_equal<T>, greater<T>
+
+
+Note: If there is a second priority, use pair (first take first)
+
+Too common:
+
+.begin()
+.end()
+.size()
+.empty()
+.clear()
+common:
+
+.insert(const pair<> )
+.erase(iterator)
+.erase(const Key)
+.order_of_key(val) => returns how many numbers are smaller than val
+.find_by_order(val) => returns the number of iterator val
+.lower_bound(const Key) - returns iterator => Previous >=x The smallest iterator
+.upper_bound(const Key) - returns iterator => succeeds >x minimal iterator
+.begin() minimum
+.end() One digit after the maximum
+.find(const Key)
+.operator[]
+.void join(tree &other) Move all elements in other to *this (the value range cannot intersect, otherwise an exception will be thrown.
+/// a.join(b) b incorporates a, provided that the values of the two trees do not intersect
+.void split(const_key_reference r_key, tree &other) Clear other, and then move all elements in *this greater than r_key to other.
+/// a.split(v, b) (key <= v) belongs to a, the other belongs to b.
+.get_l_child and get_r_child about the son

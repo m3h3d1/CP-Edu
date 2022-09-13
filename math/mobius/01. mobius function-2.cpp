@@ -18,6 +18,6 @@ int main() {
     ios_base::sync_with_stdio(0);
     int a,b,n;
     mobius();
-    for(int i=1;i<100;++i) cout<<mu[i]<<" ";
+    for(int i=1;i<100;++i) cout<<i<<" "<<mu[i]<<"\n";
     return 0;
 }
