@@ -21,3 +21,7 @@
 	#my observation: It occurs sometimes while declaring global and local variable at the same time.
 
 
+@ unexpected ll double value:
+	const ll inf = 1e18+7;
+	here, inf = 1e18; !
+		solution: use => const ll inf = (ll) 1e18+7;
