@@ -30,3 +30,19 @@ int main() {
 5
 1 4 2 4 3
 */
+
+/*
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> sub;
+        for(int x: nums) {
+            if(sub.empty() || sub.back()<x) {
+                sub.push_back(x);
+            } else {
+                auto it = lower_bound(sub.begin(), sub.end(), x);
+                *it = x;
+            }
+        }
+        for(int x: sub) cout<<x<<" ";
+        return sub.size();
+    }
+*/

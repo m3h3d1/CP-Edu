@@ -38,3 +38,7 @@ The Art of Debugging
 Stress Testing:
 https://ali-ibrahim137.github.io/competitive/programming/2020/08/23/Stress-Testing.html
 
+
+
+* test case er jonno age input nite hobe array Testing
+	https://codeforces.com/contest/1774/submission/185705277

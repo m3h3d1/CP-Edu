@@ -2,28 +2,28 @@
 #include<vector>
 using namespace std;
 vector<int> *adj;
-bool *visited,*recurArr;
+bool *visited,*dfsVis;
 
 int dfs(int x) {
 	visited[x]=1;
-	recurArr[x]=1;
+	dfsVis[x]=1;
 
 	//recursive call to all the adjacent vertices
 	for(int i=0;i<adj[x].size();++i) {
 		if(!visited[adj[x][i]] && dfs(adj[x][i]))
 			return 1;
-		else if(recurArr[adj[x][i]])
+		else if(dfsVis[adj[x][i]])
 			return 1;
 	}
 
 	//if reached here means cycle has not found in DFS from this vertex
 	//reset
-	recurArr[x]=0;
+	dfsVis[x]=0;
 	return 0;
 }
 int iscycle(int n) {
 	visited=new bool[n];
-	recurArr=new bool[n];
+	dfsVis=new bool[n];
 	for(int i=0;i<n;++i) {
 		if(dfs(i)) return 1;
 	}
@@ -43,7 +43,7 @@ int main() {
 /*
 @ Visited[] is used to keep track of already visited 
 	vertices during the DFS is never gets
-@ Recursion stack[] is used from keep track of visiting vertices 
+@ Recursion stack[] is used to keep track of visiting vertices 
 	during DFS from particular vertex and gets reset once cycle is 
 	not found from that vertex and will try DFS from other vertices.
 */

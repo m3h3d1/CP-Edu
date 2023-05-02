@@ -59,8 +59,8 @@ Lower bound = 5
 Upper bound = 9
 
 @ lower_bound vs upper_bound:
-	upper bound return first element which is >value. If not, return end().
-	lower bound return first element which is ≥value. If not, return end().
+	** upper bound return first element which is >value. If not, return end().
+	** lower bound return first element which is ≥value. If not, return end().
 
 	Elements are : 1 3 5 7 9 
 	lower bound of 5: 5

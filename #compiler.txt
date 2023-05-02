@@ -25,3 +25,10 @@
 	const ll inf = 1e18+7;
 	here, inf = 1e18; !
 		solution: use => const ll inf = (ll) 1e18+7;
+
+@ Optimization:
+#pragma GCC optimize ("O3")
+#pragma GCC target ("avx2") // or sse4
+#pragma GCC optimize("unroll-loops")
+https://web.archive.org/web/20201024153528/https://beet-aizu.hatenablog.com/entry/2020/09/04/173522
+

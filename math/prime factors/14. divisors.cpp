@@ -13,6 +13,7 @@ void divs(int r) {
 		}
 	}
 	sort(v.begin(),v.end());
+	cout<<v.size()<<":";
 	for(int i=0;i<v.size();++i) printf(" %d",v[i]);
 	printf("\n");
 }
@@ -32,4 +33,6 @@ int main() {
 123456789
 100000000
 2520
+
+9261000
 */

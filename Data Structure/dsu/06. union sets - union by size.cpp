@@ -36,5 +36,9 @@ int main(){
 	for(int i=1;i<=n;++i) {
 		cout<<findPar(i)<<" ";
 	}
+	cout<<endl;
+	for(int i=1;i<=n;++i) {
+		cout<<par[i]<<" "<<siz[i]<<endl;
+	}
 	return 0;
 }

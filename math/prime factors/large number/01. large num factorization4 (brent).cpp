@@ -48,7 +48,7 @@ inline ll f(ll a, ll c, ll n) {
     return add(mult(a, a, n), c, n);
 }
 
-ll rho(ll x, ll n) {
+ll rho(ll x, ll n) { // brent
     ll g = 1, q = 1;
     ll xs, y, c = 1;
 
