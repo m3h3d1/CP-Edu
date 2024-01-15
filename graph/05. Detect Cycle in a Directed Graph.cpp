@@ -56,3 +56,35 @@ int main() {
 2 3
 3 1
 */
+
+
+/*
+https://leetcode.com/problems/course-schedule
+
+class Solution {
+public:
+    bool cycle(int u, vector<vector<int>> &adj, vector<int> &vis, vector<int> &inStack) {
+        vis[u] = 1;
+        inStack[u] = 1;
+        for(int v: adj[u]) {
+            if(inStack[v]) return 1;
+            if(!vis[v] && cycle(v, adj, vis, inStack))
+                return 1;
+        }
+        inStack[u] = 0;
+        return 0;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> adj(numCourses);
+        for(vector<int> x: prerequisites) {
+            adj[x[1]].push_back(x[0]);
+        }
+        vector<int> vis(numCourses), inStack(numCourses);
+        for(int i=0;i<numCourses;++i) {
+            if(!vis[i] && cycle(i, adj, vis, inStack))
+                return 0;
+        }
+        return 1;
+    }
+};
+*/
