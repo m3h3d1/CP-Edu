@@ -1,0 +1,33 @@
+<snippet>
+	<content><![CDATA[
+template <class T, class Op = multiplies<T>>
+T power(T a, long long n, Op op = Op(), T e = {1}) {
+  assert(n >= 0);
+  while (n) {
+    if (n & 1) e = op(e, a);
+    if (n >>= 1) a = op(a, a);
+  }
+  return e;
+}
+vector<mint> fact, inv_fact, minv;
+void prepare(int n) {
+  fact.resize(n + 1), inv_fact.resize(n + 1), minv.resize(n + 1);
+  for (int i = 0; i <= n; ++i) fact[i] = i ? i * fact[i - 1] : 1;
+  inv_fact[n] = power(fact[n], mod - 2);
+  for (int i = n; i; --i) inv_fact[i - 1] = i * inv_fact[i];
+  for (int i = 1; i <= n; ++i) minv[i] = inv_fact[i] * fact[i - 1];
+}
+mint binom(int n, int k) {
+  if (k < 0 or k > n) return 0;
+  return fact[n] * inv_fact[k] * inv_fact[n - k];
+}
+template<> mint& mint::operator/=(mint r) {
+  return *this *= r.v < minv.size() ? minv[r.v] : power(r, mod - 2);
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>mod_binomial-risujiroh</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

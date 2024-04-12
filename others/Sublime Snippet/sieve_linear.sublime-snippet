@@ -1,0 +1,20 @@
+<snippet>
+	<content><![CDATA[
+const int N=1e6+5;
+bool comp[N+9]={1,1};
+vector<int> prime;
+void sieve() {
+	for(int i=2;i<N;++i) {
+		if(!comp[i]) prime.push_back(i);
+		for(int j=0;(long long)i*prime[j]<N;++j) {
+			comp[i*prime[j]]=1;
+			if(i%prime[j]==0) break;
+		}
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	!-- <tabTrigger>sieve linear</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

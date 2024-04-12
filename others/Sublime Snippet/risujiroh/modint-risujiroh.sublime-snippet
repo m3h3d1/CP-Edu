@@ -1,0 +1,29 @@
+<snippet>
+	<content><![CDATA[
+template <unsigned M> struct modular {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+  static constexpr unsigned mod = M;
+  using m = modular;
+  unsigned v;
+  modular(long long x = 0) : v((x %= mod) < 0 ? x + mod : x) {}
+  m operator-() const { return m() -= *this; }
+  m& operator+=(m b) { if ((int)(v += b.v - mod) < 0) v += mod; return *this; }
+  m& operator-=(m b) { if ((int)(v -= b.v) < 0) v += mod; return *this; }
+  m& operator*=(m b) { v = (uint64_t)v * b.v % mod; return *this; }
+  m& operator/=(m b) { return *this *= power(b, mod - 2); }
+  friend m operator+(m a, m b) { return a += b; }
+  friend m operator-(m a, m b) { return a -= b; }
+  friend m operator*(m a, m b) { return a *= b; }
+  friend m operator/(m a, m b) { return a /= b; }
+  friend bool operator==(m a, m b) { return a.v == b.v; }
+#pragma GCC diagnostic pop
+};
+using mint = modular<998244353>;
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>modint-risujiroh</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

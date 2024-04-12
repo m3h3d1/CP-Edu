@@ -1,0 +1,64 @@
+<snippet>
+	<content><![CDATA[
+template<class T> struct LazySegTree {
+	#define lchild v<<1,l,m
+	#define rchild v<<1|1,m+1,r
+	T st[N*4], lazy[N*4];
+	inline void change(int v, int l, int r, T val) {
+	    int nodes = (r-l+1);
+	    st[v] += val;
+	    lazy[v] += val;
+	}
+	inline void push(int v, int l, int r) {
+	    int m = (l+r)/2;
+	    change(lchild,lazy[v]);
+	    change(rchild,lazy[v]);
+	    lazy[v] = 0;
+	}
+	inline T combine(int v) {
+		return max(st[v<<1], st[v<<1|1]);
+	}
+	void build(int v, int l, int r) {
+	    lazy[v] = 0;
+	    if(l==r) {
+	        st[v] = 0;
+	        return;
+	    }
+	    int m =(l+r)/2;
+	    build(lchild);
+	    build(rchild);
+	    st[v] = combine(st[v<<1], st[v<<1|1]);
+	}
+	void update(int v, int l, int r, int i, int j, T val) {
+	    if(l>=i && r<=j) {
+	        change(v,l,r,val);
+	        return;
+	    }
+	    if(lazy[v]) push(v,l,r);
+	    int m = (l+r)/2;
+	    if(j<=m) update(lchild,i,j,val);
+	    else if(i>m) update(rchild,i,j,val);
+	    else {
+	        update(lchild,i,j,val);
+	        update(rchild,i,j,val);
+	    }
+	    st[v] = combine(st[v<<1], st[v<<1|1]);
+	}
+	T query(int v, int l, int r, int i, int j) {
+	    if(l>=i && r<=j) {
+	        return st[v];
+	    }
+	    if(lazy[v]) push(v,l,r);
+	    int m = (l+r)/2;
+	    if(j<=m) return query(lchild,i,j);
+	    else if(i>m) return query(rchild,i,j);
+	    else return combine(query(lchild,i,m), query(rchild,m+1,j));
+	}
+};
+LazySegTree<int> tree;
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	!-- <tabTrigger>LST - LazySeg</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

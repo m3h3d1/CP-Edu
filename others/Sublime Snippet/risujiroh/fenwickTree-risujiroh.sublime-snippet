@@ -1,0 +1,22 @@
+<snippet>
+	<content><![CDATA[
+template <class T> struct fenwick {
+  const int n;
+  vector<T> t;
+  fenwick(int _n = -1) : n(_n), t(n + 1) {}
+  void add(int i, T a) { for (++i; i <= n; i += i & -i) t[i] += a; }
+  T sum(int i) const {
+    T s = 0;
+    for (; i; i -= i & -i) s += t[i];
+    return s;
+  }
+  T sum(int l, int r) const { return sum(r) - sum(l); }
+  T get(int i) const { return sum(i, i + 1); }
+};
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>fenwickTree-risujiroh</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

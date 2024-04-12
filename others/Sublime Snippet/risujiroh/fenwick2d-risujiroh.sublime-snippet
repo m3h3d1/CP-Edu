@@ -1,0 +1,60 @@
+<snippet>
+	<content><![CDATA[
+template <class T> struct fenwick {
+  const int n;
+  vector<T> t;
+  fenwick(int _n = -1) : n(_n), t(n + 1) {}
+  void add(int i, T a) { for (++i; i <= n; i += i & -i) t[i] += a; }
+  T sum(int i) const {
+    T s = 0;
+    for (; i; i -= i & -i) s += t[i];
+    return s;
+  }
+};
+
+template <class T> struct fenwick2d {
+  vector<pair<int, int>> p;
+  vector<int> xs;
+  vector<vector<int>> ys;
+  int n;
+  vector<fenwick<T>> ft;
+  void add_point(int x, int y) { p.emplace_back(x, y), xs.push_back(x); }
+  void build() {
+    sort(begin(xs), end(xs));
+    xs.erase(unique(begin(xs), end(xs)), end(xs));
+    n = xs.size();
+    ys.resize(n + 1);
+    for (auto e : p) {
+      int x = zip(e.first);
+      for (++x; x <= n; x += x & -x) ys[x].push_back(e.second);
+    }
+    for (auto&& v : ys) {
+      sort(begin(v), end(v));
+      v.erase(unique(begin(v), end(v)), end(v));
+      ft.emplace_back(v.size());
+    }
+  }
+  int zip(int x) const {
+    return lower_bound(begin(xs), end(xs), x) - begin(xs);
+  }
+  int zip(int x, int y) const {
+    return lower_bound(begin(ys[x]), end(ys[x]), y) - begin(ys[x]);
+  }
+  void add(int x, int y, T a) {
+    x = zip(x);
+    for (++x; x <= n; x += x & -x) ft[x].add(zip(x, y), a);
+  }
+  T sum(int x, int y) const {
+    x = zip(x);
+    T s = 0;
+    for (; x; x -= x & -x) s += ft[x].sum(zip(x, y));
+    return s;
+  }
+};
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>fenwick2d-risujiroh</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

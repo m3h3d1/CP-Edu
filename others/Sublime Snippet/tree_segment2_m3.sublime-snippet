@@ -1,0 +1,76 @@
+<snippet>
+	<content><![CDATA[
+#define lchild v<<1,l,m
+#define rchild v<<1|1,m+1,r
+const int N = 4e5+9;
+struct node {
+    ll val, lazy;
+    node operator + (const node &a) const {
+        node c;
+        c.val = val + a.val;
+        return c;
+    }
+} st[N*4];
+ll A[N];
+
+void pushup(int v) {
+    st[v].val = st[v*2].val + st[v*2+1].val;
+}
+void build(int v, int l, int r) {
+    st[v].lazy = 0;
+    if(l==r) {
+        st[v].val = A[l];
+        return;
+    }
+    int m = (l+r)/2;
+    build(lchild);
+    build(rchild);
+    pushup(v);
+}
+void change(int v, int l, int r, ll lazy) {
+    st[v].val = st[v].val + lazy*(r-l+1);
+    if(l!=r) {
+        st[v].lazy = st[v].lazy + lazy;
+    }
+}
+void pushdown(int v, int l, int r) {
+    int m = (l+r)/2;
+    change(lchild, st[v].lazy);
+    change(rchild, st[v].lazy);
+    st[v].lazy = 0;
+}
+void update(int v, int l, int r, int i, int j, ll x) {
+    if(l>=i && r<=j) {
+        // changing value with changing lazy
+        change(v, l, r, x);
+        return;
+    }
+    if(st[v].lazy) pushdown(v, l, r);
+    int m = (l+r)/2;
+    if(j<=m) update(lchild, i, j, x);
+    else if(i>m) update(rchild, i, j, x);
+    else {
+        update(lchild, i, m, x);
+        update(rchild, m+1, j, x);
+    }
+    pushup(v);
+}
+node query(int v, int l, int r, int i, int j) {
+    if(l>=i && r<=j) return st[v];
+    if(st[v].lazy) pushdown(v, l, r);
+    int m = (l+r)/2;
+    if(j<=m) return query(lchild, i, j);
+    else if(i>m) return query(rchild, i, j);
+    else {
+        node a = query(lchild, i, m);
+        node b = query(rchild, m+1, j);
+        return a+b;
+    }
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>tree_segment2_m3</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

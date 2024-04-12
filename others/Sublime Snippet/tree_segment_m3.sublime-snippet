@@ -1,0 +1,84 @@
+<snippet>
+	<content><![CDATA[
+#define lchild v<<1,l,m
+#define rchild v<<1|1,m+1,r
+const int N = 4e5+9;
+struct node {
+    mint prod, lazyProd;
+    ll msk, lazyMsk;
+    node operator + (const node &a) const {
+        node c;
+        c.prod = prod * a.prod;
+        c.msk = msk | a.msk;
+        return c;
+    }
+} st[N*4];
+ll A[N];
+
+void pushup(int v) {
+    st[v].prod = st[v*2].prod * st[v*2+1].prod;
+    st[v].msk = st[v*2].msk | st[v*2+1].msk;
+}
+void build(int v, int l, int r) {
+    st[v].lazyProd = 1;
+    st[v].lazyMsk = 0;
+    if(l==r) {
+        st[v].prod = A[l];
+        st[v].msk = getMask(A[l]);
+        return;
+    }
+    int m = (l+r)/2;
+    build(lchild);
+    build(rchild);
+    pushup(v);
+}
+void change(int v, int l, int r, mint lazyProd, ll lazyMsk) {
+    st[v].prod = st[v].prod * power<mint>(lazyProd, r-l+1);
+    st[v].msk |= lazyMsk;
+    if(l!=r) {
+        st[v].lazyProd = st[v].lazyProd * lazyProd;
+        st[v].lazyMsk |= lazyMsk;
+    }
+}
+void pushdown(int v, int l, int r) {
+    int m = (l+r)/2;
+    change(lchild, st[v].lazyProd, st[v].lazyMsk);
+    change(rchild, st[v].lazyProd, st[v].lazyMsk);
+    st[v].lazyProd=1;
+    st[v].lazyMsk=0;
+}
+void update(int v, int l, int r, int i, int j, ll x) {
+    if(l>=i && r<=j) {
+        // changing value with changing lazy
+        change(v, l, r, x, getMask(x));
+        return;
+    }
+    if(st[v].lazyProd.v!=1 || st[v].lazyMsk) pushdown(v, l, r);
+    int m = (l+r)/2;
+    if(j<=m) update(lchild, i, j, x);
+    else if(i>m) update(rchild, i, j, x);
+    else {
+        update(lchild, i, m, x);
+        update(rchild, m+1, j, x);
+    }
+    pushup(v);
+}
+node query(int v, int l, int r, int i, int j) {
+    if(l>=i && r<=j) return st[v];
+    if(st[v].lazyProd.v!=1 || st[v].lazyMsk) pushdown(v, l, r);
+    int m = (l+r)/2;
+    if(j<=m) return query(lchild, i, j);
+    else if(i>m) return query(rchild, i, j);
+    else {
+        node a = query(lchild, i, m);
+        node b = query(rchild, m+1, j);
+        return a+b;
+    }
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>tree_segment_m3</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

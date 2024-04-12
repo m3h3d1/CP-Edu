@@ -1,0 +1,15 @@
+<snippet>
+	<content><![CDATA[
+#define iceil(n, x) (((n) + (x) - 1) / (x))
+//Returns no. of values x for which ceil(n / x) == y (y must be > 1).
+inline ll CC(ll n, ll y) { return iceil(n, y-1) - iceil(n, y); }
+ 
+//Returns no. of values x for which floor(n / x) == y
+inline ll FF(ll n, ll y) { return n / y - n / (y+1); }
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>ceil_floor</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

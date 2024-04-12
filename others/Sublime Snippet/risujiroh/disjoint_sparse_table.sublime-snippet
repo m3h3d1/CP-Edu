@@ -1,0 +1,28 @@
+<snippet>
+	<content><![CDATA[
+template <class T> struct disjoint_sparse_table {
+  vector<vector<T>> t;
+  disjoint_sparse_table(const vector<T>& v) : t(1, v) {
+    for (int k = 1, n = v.size(); 1 << k < n; ++k) {
+      t.push_back(v);
+      for (int m = 1 << k; m < n; m += 1 << (k + 1)) {
+        partial_sum(rend(v) - m, rend(v) - (m - (1 << k)),
+                    rend(t[k]) - m, [](T a, T b) { return b * a; });
+        partial_sum(begin(v) + m, begin(v) + min(m + (1 << k), n),
+                    begin(t[k]) + m, multiplies<>());
+      }
+    }
+  }
+  T fold(int l, int r) const {
+    assert(l < r);
+    if (l == --r) return t[0][l];
+    int k = __lg(l ^ r);
+    return t[k][l] * t[k][r];
+  }
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>disjoint_sparse_table-risujiroh</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

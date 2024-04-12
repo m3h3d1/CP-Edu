@@ -1,0 +1,15 @@
+<snippet>
+	<content><![CDATA[
+void dbgst(int v, int l, int r) {
+    cerr<<v<<" ("<<l<<" "<<r<<") -> "<<st[v].x<<" "<<st[v].lazy<<endl;
+    if(l==r) return;
+    int m = (l+r)/2;
+    dbgst(v*2,l,m);
+    dbgst(v*2+1,m+1,r);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>dbgST</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

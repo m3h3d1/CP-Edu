@@ -1,0 +1,18 @@
+<snippet>
+	<content><![CDATA[
+template <class T, class Op = multiplies<T>>
+T power(T a, long long n, Op op = Op(), T e = {1}) {
+  assert(n >= 0);
+  while (n) {
+    if (n & 1) e = op(e, a);
+    if (n >>= 1) a = op(a, a);
+  }
+  return e;
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>power-risujiroh</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

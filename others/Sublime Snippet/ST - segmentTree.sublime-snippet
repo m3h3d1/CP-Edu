@@ -1,0 +1,36 @@
+<snippet>
+	<content><![CDATA[
+namespace ST {
+    #define lchild v<<1,l,m
+    #define rchild v<<1|1,m+1,r
+    int st[N*4];
+
+    inline void pull(int v) {
+        st[v] = max(st[v*2], st[v*2+1]);
+    }
+    inline void build(int v, int l, int r) {
+        if(l==r) { st[v] = A[pred[l]]; return; }
+        int m = (l+r)/2;
+        build(lchild), build(rchild), pull(v);
+    }
+    inline void update(int v, int l, int r, int i, int val) {
+        if(l==r) { st[v] = val; return; }
+        int m = (l+r)/2;
+        i<=m ? update(lchild,i,val) : update(rchild,i,val), pull(v);
+    }
+    int query(int v, int l, int r, int i, int j) {
+        if(l>=i && r<=j) return st[v];
+        int m = (l+r)/2;
+        if(j<=m) return query(lchild,i,j);
+        if(i>m) return query(rchild,i,j);
+        return max(query(lchild,i,m), query(rchild,m+1,j));
+    }
+    #undef lchild
+    #undef rchild
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	!-- <tabTrigger>ST - segmentTree</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

@@ -1,0 +1,19 @@
+<snippet>
+	<content><![CDATA[
+template <typename T> inline void read(T &x) {
+    bool neg=false;
+    int c=getchar();
+    while(!isdigit(c)) {
+        if(c=='-') neg = true;
+        c=getchar();
+    }
+    for(x=0;isdigit(c);c=getchar())
+        x = (x<<1) + (x<<3) + c-'0';
+    if(neg) x *= -1;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	!-- <tabTrigger>read - fastI</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

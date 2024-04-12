@@ -1,0 +1,38 @@
+<snippet>
+	<content><![CDATA[
+// https://codeforces.com/contest/1326/submission/73691330
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
+template <class Z> Z rng(Z l, Z r) {
+  return uniform_int_distribution<Z>(l, r - 1)(mt);
+}
+struct rolling_hash {
+  static constexpr uint64_t mod = 2e9 + 33;
+  static long long base[2];
+  static vector<int> powb[2];
+  vector<int> h[2];
+  template <class S = string> rolling_hash(const S& s = "") : h{{0}, {0}} {
+    assert(all_of(begin(s), end(s), [](uint64_t c) { return c < mod; }));
+    for (int k : {0, 1}) {
+      for (auto c : s) h[k].push_back((h[k].back() * base[k] + c) % mod);
+      while (powb[k].size() <= s.size())
+        powb[k].push_back(powb[k].back() * base[k] % mod);
+    }
+  }
+  int get(int l, int r, int k) const {
+    return (h[k][r] + (mod - h[k][l]) * powb[k][r - l]) % mod;
+  }
+  auto get(int l, int r) const { return make_pair(get(l, r, 0), get(l, r, 1)); }
+  int size() const { return h[0].size() - 1; }
+};
+#pragma GCC diagnostic pop
+long long rolling_hash::base[]{rng<int>(1e9, 2e9), rng<int>(1e9, 2e9)};
+vector<int> rolling_hash::powb[]{{1}, {1}};
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	-- <tabTrigger>hash-risujiroh</tabTrigger> --
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
