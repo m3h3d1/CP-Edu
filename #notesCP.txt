@@ -34,4 +34,9 @@ How to read problem statement:
 	https://codeforces.com/blog/entry/62730
 	If you are given some connected graph with exactly one simple path between each pair of vertices, it's called tree.
 	Try even harder to spot something strange, something you not expecting.
-	
+
+
+#define ll long long has the much better alternative using ll = long long. The main difference is that the latter variant allows us to write things such as ll(a) to convert the result into a long long, whereas this doesn't compile if using define.
+
+#min heap:
+	priority_queue <int, vector<int>, greater<int>> gq;
