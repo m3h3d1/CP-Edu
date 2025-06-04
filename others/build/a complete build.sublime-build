@@ -1,0 +1,48 @@
+{
+    "selector": "source.c, source.cpp, source.java, source.py, source.python",
+    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+    "windows": {
+        "shell_cmd": "C:/MinGW/bin/g++ -std=c++14 -Wall -Wshadow -Wformat-overflow -Wno-unused-variable -Wno-sign-compare -Wno-vla -Werror=return-type -Wextra -Wno-sizeof-pointer-memaccess -Wshadow \"$file\" -o \"${file_base_name}\".exe -D_GLIBCXX_DEBUG -DLOCAL -g && start cmd /c \"\"${file_base_name}\".exe & echo. & pause\""
+    },
+    "variants": [
+    {
+        "name": "c++",
+        "shell": true,
+        "linux": {
+            "cmd": ["c++ -std=c++14 \"${file}\" -o \"${file_base_name}\".exe && gnome-terminal -e 'bash -c \"\\\"./${file_base_name}\\\";echo;read line;exit; exec bash\"'"]
+        },
+        "windows": {
+            "shell_cmd": "g++ -std=c++17 -Wall -Wshadow -Wno-unused-variable -Wno-sign-compare -Werror=return-type -Wextra -Wpedantic -Wno-sizeof-pointer-memaccess -DLOCAL \"$file\" -o \"${file_base_name}\".exe && start cmd /c \"\"${file_base_name}\".exe & echo. & pause\"",
+        },
+        "osx": {
+            "shell_cmd": "clang++ -std=c++11 -Wno-c++98-compat-pedantic %flags% -Wall \"$file\" -o \"$file_path/$file_base_name\" && xterm -e '$file_path/$file_base_name; echo && echo Press ENTER to continue && read line && exit'"
+        },
+    },
+    {
+        "name": "java",
+        "shell": true,
+        "windows": {
+            "cmd": ["javac", "$file_name", "&&", "start","cmd", "/k", "java", "$file_base_name"]
+        }
+    },
+    {
+        "name": "python",
+        "shell": true,
+        "windows": {
+            "shell_cmd": "start cmd /k \"python \"$file\" %args% & pause && exit\"",
+        },
+        "osx": {
+            "shell_cmd": "xterm -e 'python \"$file\" %args%; echo && echo Press ENTER to continue && read line && exit'",
+        }
+    },
+    {
+        "name": "Python - Panel",
+        // install sublime package "terminus"
+        "windows": {
+            "target": "terminus_exec",
+            "cmd": ["python", "$file"],
+            "auto_close": false,
+        }
+    }
+    ]
+}
