@@ -5,7 +5,7 @@
 
     "env": {
         "CPP_STD": "-std=c++17",
-        "CPP_WARNINGS": "-Wall -Wextra -DLOCAL",
+        "CPP_WARNINGS": "-Wall -Wextra -Wshadow -Wformat-overflow -Werror=return-type -Wpedantic -Wno-sizeof-pointer-memaccess -DLOCAL",
         "CPP_DEBUG_FLAGS": "-g -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls",
         "CPP_OPT_FLAGS": "-O2"
     },
@@ -17,13 +17,13 @@
             "name": "C++ Build & Run (Normal)",
             "shell": true,
             "windows": {
-                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" & echo. & pause & del \"$file_base_name.exe\"\""
+                "shell_cmd": "g++ \"$file\" $CPP_STD -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" & echo. & pause & del \"$file_base_name.exe\"\""
             },
             "linux": {
-                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\"; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
+                "shell_cmd": "g++ \"$file\" $CPP_STD -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\"; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
             },
             "osx": {
-                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS -o \"$file_path/$file_base_name\" && iTerm2 -e '$file_path/$file_base_name; echo; read line; rm \"$file_path/$file_base_name\"'"
+                "shell_cmd": "g++ \"$file\" $CPP_STD -o \"$file_path/$file_base_name\" && iTerm2 -e '$file_path/$file_base_name; echo; read line; rm \"$file_path/$file_base_name\"'"
             }
         },
         {
