@@ -1,0 +1,136 @@
+{
+    "selector": "source.c, source.cpp, source.java, source.py, source.python",
+    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+    "working_dir": "$file_path",
+
+    "variants": [
+
+        /* ===================== C++ Variants ===================== */
+        {
+            "name": "C++ Build & Run",
+            "shell": true,
+            "windows": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" & echo. & pause & del \"$file_base_name.exe\"\""
+            },
+            "linux": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\"; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
+            },
+            "osx": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -o \"$file_path/$file_base_name\" && iTerm2 -e '$file_path/$file_base_name; echo; read line; rm \"$file_path/$file_base_name\"'"
+            }
+        },
+        {
+            "name": "C++ Debug",
+            "shell": true,
+            "windows": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -fsanitize=address -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" & echo. & pause & del \"$file_base_name.exe\"\""
+            },
+            "linux": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -fsanitize=address -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\"; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
+            },
+            "osx": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -fsanitize=address -o \"$file_path/$file_base_name\" && iTerm2 -e '$file_path/$file_base_name; echo; read line; rm \"$file_path/$file_base_name\"'"
+            }
+        },
+        {
+            "name": "C++ CP Run (input.txt/output.txt)",
+            "shell": true,
+            "windows": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" < input.txt > output.txt & echo. & pause & del \"$file_base_name.exe\"\""
+            },
+            "linux": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\" < input.txt > output.txt; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
+            },
+            "osx": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_path/$file_base_name\" && iTerm2 -e './$file_path/$file_base_name < input.txt > output.txt; echo; read line; rm \"$file_path/$file_base_name\"'"
+            }
+        },
+        {
+            "name": "C++ CP Run with Timer",
+            "shell": true,
+            "windows": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_base_name.exe\" && start cmd /k \"time \"$file_base_name.exe\" < input.txt > output.txt & echo. & pause & del \"$file_base_name.exe\"\""
+            },
+            "linux": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_base_name\" && gnome-terminal -- bash -c 'time ./\"$file_base_name\" < input.txt > output.txt; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
+            },
+            "osx": {
+                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_path/$file_base_name\" && iTerm2 -e 'time ./$file_path/$file_base_name < input.txt > output.txt; echo; read line; rm \"$file_path/$file_base_name\"'"
+            }
+        },
+
+        /* ===================== Java Variants ===================== */
+        {
+            "name": "Java Build & Run",
+            "shell": true,
+            "windows": {
+                "cmd": ["javac", "$file_name", "&&", "start", "cmd", "/k", "java", "$file_base_name"]
+            },
+            "linux": {
+                "shell_cmd": "javac \"$file\" && gnome-terminal -- bash -c 'java \"$file_base_name\"; echo; echo Press ENTER to exit; read line'"
+            },
+            "osx": {
+                "shell_cmd": "javac \"$file\" && iTerm2 -e 'java \"$file_base_name\"; read line'"
+            }
+        },
+        {
+            "name": "Java CP Run (input.txt/output.txt)",
+            "shell": true,
+            "windows": {
+                "cmd": ["javac", "$file_name", "&&", "start", "cmd", "/k", "java", "$file_base_name", "<", "input.txt", ">", "output.txt"]
+            },
+            "linux": {
+                "shell_cmd": "javac \"$file\" && gnome-terminal -- bash -c 'java \"$file_base_name\" < input.txt > output.txt; echo; echo Press ENTER to exit; read line'"
+            },
+            "osx": {
+                "shell_cmd": "javac \"$file\" && iTerm2 -e 'java \"$file_base_name\" < input.txt > output.txt; echo; read line'"
+            }
+        },
+
+        /* ===================== Python Variants ===================== */
+        {
+            "name": "Python Run",
+            "shell": true,
+            "windows": {
+                "shell_cmd": "start cmd /k \"python \"$file\" & pause\""
+            },
+            "linux": {
+                "shell_cmd": "gnome-terminal -- bash -c 'python3 \"$file\"; echo; echo Press ENTER to exit; read line'"
+            },
+            "osx": {
+                "shell_cmd": "iTerm2 -e 'python3 \"$file\"; read line'"
+            }
+        },
+        {
+            "name": "Python CP Run (input.txt/output.txt)",
+            "shell": true,
+            "windows": {
+                "shell_cmd": "start cmd /k \"python \"$file\" < input.txt > output.txt & pause\""
+            },
+            "linux": {
+                "shell_cmd": "gnome-terminal -- bash -c 'python3 \"$file\" < input.txt > output.txt; echo; echo Press ENTER to exit; read line'"
+            },
+            "osx": {
+                "shell_cmd": "iTerm2 -e 'python3 \"$file\" < input.txt > output.txt; echo; read line'"
+            }
+        },
+        {
+            "name": "Python - Panel (Terminus)",
+            "windows": {
+                "target": "terminus_exec",
+                "cmd": ["python", "$file"],
+                "auto_close": false
+            },
+            "linux": {
+                "target": "terminus_exec",
+                "cmd": ["python3", "$file"],
+                "auto_close": false
+            },
+            "osx": {
+                "target": "terminus_exec",
+                "cmd": ["python3", "$file"],
+                "auto_close": false
+            }
+        }
+    ]
+}
