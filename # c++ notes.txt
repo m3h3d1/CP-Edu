@@ -10,11 +10,6 @@
 	}
 	https://codeforces.com/blog/entry/70472?#comment-549321
 
-# use 1ll
-	int x = 1000000;
-	int y = 1000000;
-	long long int z = 1ll*x*y;
-
 long long int z = 1ll << 40;
 
 # (z + x*y)%mod is the same as ((z%mod) + ((x%mod)*(y%mod))%mod)%mod.
