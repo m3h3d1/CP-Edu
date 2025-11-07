@@ -3,59 +3,66 @@
     "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
     "working_dir": "$file_path",
 
+    "env": {
+        "CPP_STD": "-std=c++17",
+        "CPP_WARNINGS": "-Wall -Wextra -DLOCAL",
+        "CPP_DEBUG_FLAGS": "-g -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls",
+        "CPP_OPT_FLAGS": "-O2"
+    },
+
     "variants": [
 
         /* ===================== C++ Variants ===================== */
         {
-            "name": "C++ Build & Run",
+            "name": "C++ Build & Run (Normal)",
             "shell": true,
             "windows": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" & echo. & pause & del \"$file_base_name.exe\"\""
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" & echo. & pause & del \"$file_base_name.exe\"\""
             },
             "linux": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\"; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\"; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
             },
             "osx": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -o \"$file_path/$file_base_name\" && iTerm2 -e '$file_path/$file_base_name; echo; read line; rm \"$file_path/$file_base_name\"'"
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS -o \"$file_path/$file_base_name\" && iTerm2 -e '$file_path/$file_base_name; echo; read line; rm \"$file_path/$file_base_name\"'"
             }
         },
         {
-            "name": "C++ Debug",
+            "name": "C++ Debug Build",
             "shell": true,
             "windows": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -fsanitize=address -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" & echo. & pause & del \"$file_base_name.exe\"\""
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS $CPP_DEBUG_FLAGS -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" & echo. & pause & del \"$file_base_name.exe\"\""
             },
             "linux": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -fsanitize=address -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\"; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS $CPP_DEBUG_FLAGS -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\"; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
             },
             "osx": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -g -fsanitize=address -o \"$file_path/$file_base_name\" && iTerm2 -e '$file_path/$file_base_name; echo; read line; rm \"$file_path/$file_base_name\"'"
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS $CPP_DEBUG_FLAGS -o \"$file_path/$file_base_name\" && iTerm2 -e '$file_path/$file_base_name; echo; read line; rm \"$file_path/$file_base_name\"'"
             }
         },
         {
             "name": "C++ CP Run (input.txt/output.txt)",
             "shell": true,
             "windows": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" < input.txt > output.txt & echo. & pause & del \"$file_base_name.exe\"\""
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS $CPP_OPT_FLAGS -o \"$file_base_name.exe\" && start cmd /k \"\"$file_base_name.exe\" < input.txt > output.txt & echo. & pause & del \"$file_base_name.exe\"\""
             },
             "linux": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\" < input.txt > output.txt; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS $CPP_OPT_FLAGS -o \"$file_base_name\" && gnome-terminal -- bash -c './\"$file_base_name\" < input.txt > output.txt; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
             },
             "osx": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_path/$file_base_name\" && iTerm2 -e './$file_path/$file_base_name < input.txt > output.txt; echo; read line; rm \"$file_path/$file_base_name\"'"
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS $CPP_OPT_FLAGS -o \"$file_path/$file_base_name\" && iTerm2 -e './$file_path/$file_base_name < input.txt > output.txt; echo; read line; rm \"$file_path/$file_base_name\"'"
             }
         },
         {
             "name": "C++ CP Run with Timer",
             "shell": true,
             "windows": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_base_name.exe\" && start cmd /k \"time \"$file_base_name.exe\" < input.txt > output.txt & echo. & pause & del \"$file_base_name.exe\"\""
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS $CPP_OPT_FLAGS -o \"$file_base_name.exe\" && start cmd /k \"time \"$file_base_name.exe\" < input.txt > output.txt & echo. & pause & del \"$file_base_name.exe\"\""
             },
             "linux": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_base_name\" && gnome-terminal -- bash -c 'time ./\"$file_base_name\" < input.txt > output.txt; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS $CPP_OPT_FLAGS -o \"$file_base_name\" && gnome-terminal -- bash -c 'time ./\"$file_base_name\" < input.txt > output.txt; echo; echo Press ENTER to exit; read line; rm \"$file_base_name\"'"
             },
             "osx": {
-                "shell_cmd": "g++ \"$file\" -std=c++17 -Wall -Wextra -DLOCAL -O2 -o \"$file_path/$file_base_name\" && iTerm2 -e 'time ./$file_path/$file_base_name < input.txt > output.txt; echo; read line; rm \"$file_path/$file_base_name\"'"
+                "shell_cmd": "g++ \"$file\" $CPP_STD $CPP_WARNINGS $CPP_OPT_FLAGS -o \"$file_path/$file_base_name\" && iTerm2 -e 'time ./$file_path/$file_base_name < input.txt > output.txt; echo; read line; rm \"$file_path/$file_base_name\"'"
             }
         },
 
